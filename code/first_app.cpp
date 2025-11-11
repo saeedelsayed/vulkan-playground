@@ -1,5 +1,5 @@
 #include "first_app.hpp"
-
+#include "lve_texture.hpp"
 #include "keyboard_movement_controller.hpp"
 #include "simple_render_system.hpp"
 #include "lve_camera.hpp"
@@ -31,6 +31,7 @@ namespace lve {
         globalPool = LveDescriptorPool::Builder(lveDevice)
             .setMaxSets(LveSwapChain::MAX_FRAMES_IN_FLIGHT)
             .addPoolSize(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, LveSwapChain::MAX_FRAMES_IN_FLIGHT)
+            .addPoolSize(VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, LveSwapChain::MAX_FRAMES_IN_FLIGHT)
             .build();
        
         loadGameObjects();
@@ -43,6 +44,8 @@ namespace lve {
     FirstApp::~FirstApp() {}
 
     void FirstApp::run() {
+        std::shared_ptr<LveTexture> texture1 = std::make_unique<LveTexture>(lveDevice, "../vulkan-playground/textures/nature.jpg");
+        std::shared_ptr<LveTexture> texture2 = std::make_unique<LveTexture>(lveDevice, "../vulkan-playground/textures/background.jpg");
         std::vector<std::unique_ptr<LveBuffer>> uboBuffers(LveSwapChain::MAX_FRAMES_IN_FLIGHT);
         for (int i = 0; i < uboBuffers.size(); i++) {
             uboBuffers[i] = std::make_unique<LveBuffer>(
@@ -56,13 +59,25 @@ namespace lve {
 
         auto globalSetLayout = LveDescriptorSetLayout::Builder(lveDevice)
             .addBinding(0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_VERTEX_BIT)
+            .addBinding(1, VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, VK_SHADER_STAGE_FRAGMENT_BIT, 2)
             .build();
 
         std::vector<VkDescriptorSet> globalDescriptorSet(LveSwapChain::MAX_FRAMES_IN_FLIGHT);
         for (int i = 0; i < globalDescriptorSet.size(); i++) {
             auto bufferInfo = uboBuffers[i]->descriptorInfo();
+
+            VkDescriptorImageInfo imageInfo[2];
+            imageInfo[0].imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+            imageInfo[0].imageView = texture1->textureImageView;
+            imageInfo[0].sampler = texture1->textureSampler;
+
+            imageInfo[1].imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+            imageInfo[1].imageView = texture2->textureImageView;
+            imageInfo[1].sampler = texture2->textureSampler;
+
             LveDescriptorWriter(*globalSetLayout, *globalPool)
                 .writeBuffer(0, &bufferInfo)
+                .writeImage(1, imageInfo)
                 .build(globalDescriptorSet[i]);
         }
 

@@ -17,6 +17,7 @@ layout(set = 0, binding = 0) uniform GlobalUbo {
 layout(push_constant) uniform Push {
 	mat4 modalMatrix;
 	mat4 normalMatrix;
+	int textureID;
 } push;
 
 const float AMBIENT = 0.02;

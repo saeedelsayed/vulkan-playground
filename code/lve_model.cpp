@@ -7,7 +7,6 @@
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/hash.hpp>
 
-#define STB_IMAGE_IMPLEMENTATION 
 
 // std
 #include <cassert>

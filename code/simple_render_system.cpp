@@ -16,6 +16,7 @@ namespace lve {
     struct SimplePushConstantData {
         glm::mat4 modalMatix{1.0f};
         glm::mat4 normalMatrix{1.f};
+        int textureID;
     };
 
     SimpleRenderSystem::SimpleRenderSystem(LveDevice& device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout) : lveDevice(device) {
@@ -57,8 +58,8 @@ namespace lve {
         pipelineConfig.pipelineLayout = pipelineLayout;
         lvePipeline = std::make_unique<LvePipeline>(
             lveDevice,
-            "code/simple_shader.vert.spv",
-            "code/simple_shader.frag.spv",
+            "../vulkan-playground/code/simple_shader.vert.spv",
+            "../vulkan-playground/code/simple_shader.frag.spv",
             pipelineConfig);
     }
 
@@ -75,10 +76,12 @@ namespace lve {
             0,
             nullptr);
 
+        uint8_t i = 0;
         for (auto& obj : gameObjects) {
             SimplePushConstantData push{};
             push.modalMatix = obj.transform.mat4();
             push.normalMatrix = obj.transform.normalMatrix();
+            push.textureID = i++;
 
             vkCmdPushConstants(frameinfo.commandBuffer, pipelineLayout, VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT, 0,
                 sizeof(SimplePushConstantData), &push);
