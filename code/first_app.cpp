@@ -139,31 +139,20 @@ namespace lve {
         LveModel::Builder cube1{};
         cube1.vertices = {
             // Front face
-            {{1.0f, -0.5f,  1.5f}, {0.2f, 0.8f, 1.f}, {0.f, 0.f, 1.f}, {1.f, 0.f}},
-            {{2.0f, -0.5f,  1.5f}, {0.6f, 0.3f, 1.f}, {0.f, 0.f, 1.f}, {0.f, 0.f}},
-            {{2.0f,  0.5f,  1.5f}, {0.2f, 0.6f, 0.8f}, {0.f, 0.f, 1.f}, {0.f, 1.f}},
-            {{1.0f,  0.5f,  1.5f}, {0.9f, 0.4f, 0.6f}, {0.f, 0.f, 1.f}, {1.f, 1.f}},
+            {{-1.0f, -1.0f,  0.2f}, {0.2f, 0.8f, 1.f}, {0.f, 0.f, 1.f}, {1.f, 0.f}},
+            {{1.0f, -1.0f,  0.2f}, {0.6f, 0.3f, 1.f}, {0.f, 0.f, 1.f}, {0.f, 0.f}},
+            {{1.0f,  1.0f,  0.2f}, {0.2f, 0.6f, 0.8f}, {0.f, 0.f, 1.f}, {0.f, 1.f}},
+            {{-1.0f, 1.0f,  0.2f}, {0.9f, 0.4f, 0.6f}, {0.f, 0.f, 1.f}, {1.f, 1.f}},
 
-            // Back face
-            {{1.0f, -0.5f, 0.6f}, {0.2f, 0.9f, 0.4f}, {0.f, 0.f, -1.f}, {1.f, 0.f}},
-            {{2.0f, -0.5f, 0.6f}, {0.8f, 0.2f, 0.3f}, {0.f, 0.f, -1.f}, {0.f, 0.f}},
-            {{2.0f,  0.5f, 0.6f}, {0.3f, 0.7f, 0.9f}, {0.f, 0.f, -1.f}, {0.f, 1.f}},
-            {{1.0f,  0.5f, 0.6f}, {0.7f, 0.5f, 0.2f}, {0.f, 0.f, -1.f}, {1.f, 1.f}},
+            //// Back face
+            //{{1.0f, -0.5f, 0.6f}, {0.2f, 0.9f, 0.4f}, {0.f, 0.f, -1.f}, {1.f, 0.f}},
+            //{{2.0f, -0.5f, 0.6f}, {0.8f, 0.2f, 0.3f}, {0.f, 0.f, -1.f}, {0.f, 0.f}},
+            //{{2.0f,  0.5f, 0.6f}, {0.3f, 0.7f, 0.9f}, {0.f, 0.f, -1.f}, {0.f, 1.f}},
+            //{{1.0f,  0.5f, 0.6f}, {0.7f, 0.5f, 0.2f}, {0.f, 0.f, -1.f}, {1.f, 1.f}},
         };
 
         cube1.indices = {
-            // Front face
-            0, 1, 2, 2, 3, 0,
-            // Back face
-            4, 5, 6, 6, 7, 4,
-            // Left face
-            4, 0, 3, 3, 7, 4,
-            // Right face
-            1, 5, 6, 6, 2, 1,
-            // Top face
-            3, 2, 6, 6, 7, 3,
-            // Bottom face
-            4, 5, 1, 1, 0, 4
+        0, 1, 2, 2, 3, 0
         };
         std::shared_ptr<LveModel> lvemodel = std::make_unique<LveModel>(lveDevice, cube1);
         auto tri = LveGameObject::createGameObject();
@@ -171,40 +160,40 @@ namespace lve {
         //tri.transform.scale = { .2f, .2f, .2f };
         gameObjects.push_back(std::move(tri));
 
-        LveModel::Builder cube2{};
-        cube2.vertices = {
-            // Front face
-            {{1.0f, -0.5f,  0.5f}, {0.2f, 0.8f, 1.f}, {0.f, 0.f, 1.f}, {0.f, 0.f}},
-            {{2.0f, -0.5f,  0.5f}, {0.6f, 0.3f, 1.f}, {0.f, 0.f, 1.f}, {1.f, 0.f}},
-            {{2.0f,  0.5f,  0.5f}, {0.2f, 0.6f, 0.8f}, {0.f, 0.f, 1.f}, {1.f, 1.f}},
-            {{1.0f,  0.5f,  0.5f}, {0.9f, 0.4f, 0.6f}, {0.f, 0.f, 1.f}, {0.f, 1.f}},
+        //LveModel::Builder cube2{};
+        //cube2.vertices = {
+        //    // Front face
+        //    {{1.0f, -0.5f,  0.5f}, {0.2f, 0.8f, 1.f}, {0.f, 0.f, 1.f}, {0.f, 0.f}},
+        //    {{2.0f, -0.5f,  0.5f}, {0.6f, 0.3f, 1.f}, {0.f, 0.f, 1.f}, {1.f, 0.f}},
+        //    {{2.0f,  0.5f,  0.5f}, {0.2f, 0.6f, 0.8f}, {0.f, 0.f, 1.f}, {1.f, 1.f}},
+        //    {{1.0f,  0.5f,  0.5f}, {0.9f, 0.4f, 0.6f}, {0.f, 0.f, 1.f}, {0.f, 1.f}},
 
-            // Back face
-            {{1.0f, -0.5f, 1.0f}, {0.2f, 0.9f, 0.4f}, {0.f, 0.f, -1.f}, {1.f, 0.f}},
-            {{2.0f, -0.5f, 1.0f}, {0.8f, 0.2f, 0.3f}, {0.f, 0.f, -1.f}, {0.f, 0.f}},
-            {{2.0f,  0.5f, 1.0f}, {0.3f, 0.7f, 0.9f}, {0.f, 0.f, -1.f}, {0.f, 1.f}},
-            {{1.0f,  0.5f, 1.0f}, {0.7f, 0.5f, 0.2f}, {0.f, 0.f, -1.f}, {1.f, 1.f}},
-        };
-        cube2.indices = {
-            // Front face
-            0, 1, 2, 2, 3, 0,
-            // Back face
-            4, 5, 6, 6, 7, 4,
-            // Left face
-            4, 0, 3, 3, 7, 4,
-            // Right face
-            1, 5, 6, 6, 2, 1,
-            // Top face
-            3, 2, 6, 6, 7, 3,
-            // Bottom face
-            4, 5, 1, 1, 0, 4
-        };
+        //    // Back face
+        //    {{1.0f, -0.5f, 1.0f}, {0.2f, 0.9f, 0.4f}, {0.f, 0.f, -1.f}, {1.f, 0.f}},
+        //    {{2.0f, -0.5f, 1.0f}, {0.8f, 0.2f, 0.3f}, {0.f, 0.f, -1.f}, {0.f, 0.f}},
+        //    {{2.0f,  0.5f, 1.0f}, {0.3f, 0.7f, 0.9f}, {0.f, 0.f, -1.f}, {0.f, 1.f}},
+        //    {{1.0f,  0.5f, 1.0f}, {0.7f, 0.5f, 0.2f}, {0.f, 0.f, -1.f}, {1.f, 1.f}},
+        //};
+        //cube2.indices = {
+        //    // Front face
+        //    0, 1, 2, 2, 3, 0,
+        //    // Back face
+        //    4, 5, 6, 6, 7, 4,
+        //    // Left face
+        //    4, 0, 3, 3, 7, 4,
+        //    // Right face
+        //    1, 5, 6, 6, 2, 1,
+        //    // Top face
+        //    3, 2, 6, 6, 7, 3,
+        //    // Bottom face
+        //    4, 5, 1, 1, 0, 4
+        //};
 
-        std::shared_ptr<LveModel> lvemodel2 = std::make_unique<LveModel>(lveDevice, cube2);
-        auto tri2 = LveGameObject::createGameObject();
-        tri2.model = lvemodel2;
-        tri2.transform.scale = { .2f, .2f, .2f };
-        gameObjects.push_back(std::move(tri2));
+        //std::shared_ptr<LveModel> lvemodel2 = std::make_unique<LveModel>(lveDevice, cube2);
+        //auto tri2 = LveGameObject::createGameObject();
+        //tri2.model = lvemodel2;
+        //tri2.transform.scale = { .2f, .2f, .2f };
+        //gameObjects.push_back(std::move(tri2));
     }  // namespace lve
 
 
